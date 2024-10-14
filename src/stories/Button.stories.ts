@@ -52,9 +52,3 @@ export const Small: Story = {
   },
 };
 
-export const OnboardinbButton: Story = {
-  args: {
-    primary: false,
-    label: "Button"
-  }
-};
