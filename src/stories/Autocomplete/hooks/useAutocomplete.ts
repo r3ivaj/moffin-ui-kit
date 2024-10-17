@@ -4,6 +4,7 @@ import {
   filterOptions as filterOptionsUtil,
   moveSelectedOptionToTop,
 } from "../utils/utils";
+import { Option } from "../Autocomplete.types";
 
 const HANDLE_OPEN_EVENT_TYPES = {
   ROOT_CLICK: "ROOT_CLICK",
@@ -20,9 +21,9 @@ const HANDLE_CLOSE_EVENT_TYPES = {
 
 const useAutocomplete = ({ id, options: originalOptions, value, onChange }) => {
   const [open, setOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(value);
-  const [focused, setFocused] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [selectedOption, setSelectedOption] = useState<Option>(value);
+  const [focused, setFocused] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>("");
   const rootRef = useRef(null);
   const inputRef = useRef(null);
   const listboxRef = useRef(null);
@@ -55,6 +56,18 @@ const useAutocomplete = ({ id, options: originalOptions, value, onChange }) => {
     [originalOptions],
   );
 
+  const filterOptions = (inputText: string): void => {
+    setOptions(() =>
+      filterOptionsUtil({
+        options: moveSelectedOptionToTop({
+          options: originalOptions,
+          selectedOption,
+        }),
+        searchText: inputText,
+      }),
+    );
+  };
+
   const resetInputValue = (event, newValue) => {};
 
   useClickAway(rootRef, (event) => {
@@ -80,18 +93,6 @@ const useAutocomplete = ({ id, options: originalOptions, value, onChange }) => {
         inputRef.current.focus();
       },
     };
-  };
-
-  const filterOptions = (inputText) => {
-    setOptions(() =>
-      filterOptionsUtil({
-        options: moveSelectedOptionToTop({
-          options: originalOptions,
-          selectedOption,
-        }),
-        searchText: inputText,
-      }),
-    );
   };
 
   const getInputProps = () => {

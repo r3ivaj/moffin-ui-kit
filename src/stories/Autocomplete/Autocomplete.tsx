@@ -4,15 +4,12 @@ import {
   Label,
   Input,
   Listbox,
-  Option,
+  Option as OptionComponent,
   PopupIndicator,
 } from "./components";
 import clsx from "clsx";
 import useAutocomplete from "./hooks/useAutocomplete";
-
-type Option = {
-  label: string;
-};
+import { Option } from "./Autocomplete.types";
 
 export interface AutocompleteProps {
   /** Array of options */
@@ -76,13 +73,13 @@ export const Autocomplete = ({
           {popupOpen && options.length > 0 && (
             <Listbox {...getListboxProps()}>
               {(options as Option[]).map((option, index) => (
-                <Option
+                <OptionComponent
                   {...getOptionProps({ option, index })}
                   key={index}
                   startAdornment={startAdornment}
                 >
                   {option.label}
-                </Option>
+                </OptionComponent>
               ))}
             </Listbox>
           )}
