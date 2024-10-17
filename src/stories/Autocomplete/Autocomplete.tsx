@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useAutocomplete } from "@mui/base/useAutocomplete";
+// import { useAutocomplete } from "@mui/base/useAutocomplete";
 import {
   Root,
   Label,
@@ -9,6 +9,7 @@ import {
   PopupIndicator,
 } from "./components";
 import clsx from "clsx";
+import useAutocomplete from "./hooks/useAutocomplete";
 
 export interface AutocompleteProps<Option> {
   /** Array of options */
@@ -36,47 +37,64 @@ export const Autocomplete = <Option,>({
 }: AutocompleteProps<Option>) => {
   const [value, setValue] = React.useState<Option | null>(null);
   const [hovered, setHovered] = React.useState<boolean>(false);
-  const [internalOptions, setInternalOptions] =
-    React.useState<Option[]>(options);
+  // const [internalOptions, setInternalOptions] =
+  //   React.useState<Option[]>(options);
+
+  // const {
+  //   getRootProps,
+  //   getInputLabelProps,
+  //   getInputProps,
+  //   getPopupIndicatorProps,
+  //   popupOpen,
+  //   getListboxProps: defaultGetListboxProps,
+  //   getOptionProps,
+  //   groupedOptions,
+  //   focused,
+  // } = useAutocomplete({
+  //   id: "autocomplete",
+  //   options: internalOptions,
+  //   getOptionLabel,
+  //   value,
+  //   onChange: (_, newValue) => {
+  //     setHovered(false);
+  //     setValue(newValue);
+
+  //     if (newValue) {
+  //       const reorderedOptions = [
+  //         newValue,
+  //         ...internalOptions.filter((option) => option !== newValue),
+  //       ];
+  //       setInternalOptions(reorderedOptions);
+  //     } else {
+  //       setInternalOptions(options);
+  //     }
+  //   },
+  // });
+
+  // // Custom getListboxProps implementation
+  // const getListboxProps = () => {
+  //   return {
+  //     ...defaultGetListboxProps(),
+  //     ref: undefined,
+  //   };
+  // };
 
   const {
     getRootProps,
-    getInputLabelProps,
     getInputProps,
     getPopupIndicatorProps,
-    popupOpen,
-    getListboxProps: defaultGetListboxProps,
+    getInputLabelProps,
+    getListboxProps,
     getOptionProps,
-    groupedOptions,
+    popupOpen,
     focused,
+    groupedOptions,
   } = useAutocomplete({
     id: "autocomplete",
-    options: internalOptions,
-    getOptionLabel,
+    options,
     value,
-    onChange: (_, newValue) => {
-      setHovered(false);
-      setValue(newValue);
-
-      if (newValue) {
-        const reorderedOptions = [
-          newValue,
-          ...internalOptions.filter((option) => option !== newValue),
-        ];
-        setInternalOptions(reorderedOptions);
-      } else {
-        setInternalOptions(options);
-      }
-    },
+    onChange: (_, newValue) => setValue(newValue),
   });
-
-  // Custom getListboxProps implementation
-  const getListboxProps = () => {
-    return {
-      ...defaultGetListboxProps(),
-      ref: undefined,
-    };
-  };
 
   return (
     <React.Fragment>
@@ -100,7 +118,7 @@ export const Autocomplete = <Option,>({
             popupOpen={popupOpen}
             focused={focused}
           />
-          {groupedOptions.length > 0 && (
+          {popupOpen && groupedOptions.length > 0 && (
             <Listbox {...getListboxProps()}>
               {(groupedOptions as Option[]).map((option, index) => (
                 <Option {...getOptionProps({ option, index })} key={index}>
