@@ -1,6 +1,14 @@
 import * as React from "react";
 import { useAutocomplete } from "@mui/base/useAutocomplete";
-import { Root, Label, Input, Listbox, Option } from "./components";
+import {
+  Root,
+  Label,
+  Input,
+  Listbox,
+  Option,
+  PopupIndicator,
+} from "./components";
+import clsx from "clsx";
 
 export interface AutocompleteProps<Option> {
   /** Array of options */
@@ -9,6 +17,8 @@ export interface AutocompleteProps<Option> {
   label: string;
   /** Function to extract the label to display from an option */
   getOptionLabel?: (option: Option) => string;
+  /** Subtext */
+  subtext?: string;
 }
 
 const defaultGetOptionLabel = <Option,>(option: Option): string => {
@@ -22,14 +32,18 @@ export const Autocomplete = <Option,>({
   options,
   label,
   getOptionLabel = defaultGetOptionLabel,
+  subtext,
 }: AutocompleteProps<Option>) => {
   const [value, setValue] = React.useState<Option | null>(null);
+  const [hovered, setHovered] = React.useState<boolean>(false);
 
   const {
     getRootProps,
     getInputLabelProps,
     getInputProps,
-    getListboxProps,
+    getPopupIndicatorProps,
+    popupOpen,
+    getListboxProps: defaultGetListboxProps,
     getOptionProps,
     groupedOptions,
     focused,
@@ -38,24 +52,69 @@ export const Autocomplete = <Option,>({
     options,
     getOptionLabel,
     value,
-    onChange: (event, newValue) => setValue(newValue),
+    onChange: (_, newValue) => {
+      setHovered(false);
+      setValue(newValue);
+    },
   });
+
+  // Reorder options to put the selected value at the top
+  const orderedOptions = React.useMemo(() => {
+    if (value) {
+      return [value, ...groupedOptions.filter((option) => option !== value)];
+    }
+    return groupedOptions;
+  }, [groupedOptions, value]);
+
+  // Custom getListboxProps implementation
+  const getListboxProps = () => {
+    return {
+      ...defaultGetListboxProps(),
+      ref: undefined,
+    };
+  };
 
   return (
     <React.Fragment>
-      <Label {...getInputLabelProps()}>{label}</Label>
-      <Root {...getRootProps()} className={focused ? "focused" : ""}>
-        <Input {...getInputProps()} />
-      </Root>
-      {groupedOptions.length > 0 && (
-        <Listbox {...getListboxProps()}>
-          {(groupedOptions as Option[]).map((option, index) => (
-            <Option {...getOptionProps({ option, index })} key={index}>
-              {getOptionLabel(option)}
-            </Option>
-          ))}
-        </Listbox>
-      )}
+      <div>
+        <Root
+          {...getRootProps()}
+          focused={focused}
+          hovered={hovered}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          <Label
+            {...getInputLabelProps()}
+            moveToTop={value !== null || focused}
+          >
+            {label}
+          </Label>
+          <Input {...getInputProps()} />
+          <PopupIndicator
+            {...getPopupIndicatorProps()}
+            popupOpen={popupOpen}
+            focused={focused}
+          />
+          {groupedOptions.length > 0 && (
+            <Listbox {...getListboxProps()}>
+              {(orderedOptions as Option[]).map((option, index) => (
+                <Option {...getOptionProps({ option, index })} key={index}>
+                  {getOptionLabel(option)}
+                </Option>
+              ))}
+            </Listbox>
+          )}
+        </Root>
+        <span
+          className={clsx(
+            "text-xs text-[#6B7280]",
+            hovered && "drop-shadow-[0_4px_8px_rgba(64,67,68,0.24)]",
+          )}
+        >
+          {subtext}
+        </span>
+      </div>
     </React.Fragment>
   );
 };
