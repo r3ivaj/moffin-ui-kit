@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, ForwardedRef } from "react";
-import { ChevronDownIcon } from "../../shared/icons";
+import { ChevronUpIcon } from "../../shared/icons";
 
 import clsx from "clsx";
 
@@ -22,10 +22,10 @@ const PopupIndicator = React.forwardRef(function PopupIndicator(
       ref={ref}
       {...props}
     >
-      <ChevronDownIcon
+      <ChevronUpIcon
         className={clsx(
-          "size-5 translate-y-0.5 transform text-[#6B7280]",
-          popupOpen && "rotate-180",
+          "size-5 transform text-[#6B7280]",
+          !popupOpen && "rotate-180",
           focused && "text-black",
         )}
       />

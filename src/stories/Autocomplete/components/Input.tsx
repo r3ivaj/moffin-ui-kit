@@ -8,7 +8,7 @@ const Input = React.forwardRef(function Input(
   return (
     <input
       className={clsx(
-        "flex-1 rounded-[inherit] border-none bg-inherit px-4 py-2 text-sm text-black outline-0",
+        "flex-1 rounded-[inherit] border-none bg-inherit px-4 py-2 text-sm font-normal text-black outline-0",
         className,
       )}
       ref={ref}

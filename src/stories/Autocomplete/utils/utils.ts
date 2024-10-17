@@ -13,3 +13,11 @@ export function filterOptions({ options, searchText }) {
     return normalizedLabel.includes(normalizedSearchText);
   });
 }
+
+export function moveSelectedOptionToTop({ selectedOption, options }) {
+  if (!selectedOption) return options;
+  return [
+    selectedOption,
+    ...options.filter((option) => option.label !== selectedOption.label),
+  ];
+}

@@ -1,5 +1,4 @@
 import * as React from "react";
-// import { useAutocomplete } from "@mui/base/useAutocomplete";
 import {
   Root,
   Label,
@@ -11,73 +10,29 @@ import {
 import clsx from "clsx";
 import useAutocomplete from "./hooks/useAutocomplete";
 
-export interface AutocompleteProps<Option> {
+type Option = {
+  label: string;
+};
+
+export interface AutocompleteProps {
   /** Array of options */
   options: Option[];
   /** Label for the autocomplete */
   label: string;
-  /** Function to extract the label to display from an option */
-  getOptionLabel?: (option: Option) => string;
   /** Subtext */
   subtext?: string;
+  /** Start Adornment */
+  startAdornment?: (props: { hovered: boolean }) => React.ReactNode;
 }
 
-const defaultGetOptionLabel = <Option,>(option: Option): string => {
-  if (option && typeof option === "object" && "label" in option) {
-    return String((option as { label: unknown }).label);
-  }
-  return String(option);
-};
-
-export const Autocomplete = <Option,>({
-  options,
+export const Autocomplete = ({
+  options: originalOptions,
   label,
-  getOptionLabel = defaultGetOptionLabel,
   subtext,
-}: AutocompleteProps<Option>) => {
+  startAdornment,
+}: AutocompleteProps) => {
   const [value, setValue] = React.useState<Option | null>(null);
   const [hovered, setHovered] = React.useState<boolean>(false);
-  // const [internalOptions, setInternalOptions] =
-  //   React.useState<Option[]>(options);
-
-  // const {
-  //   getRootProps,
-  //   getInputLabelProps,
-  //   getInputProps,
-  //   getPopupIndicatorProps,
-  //   popupOpen,
-  //   getListboxProps: defaultGetListboxProps,
-  //   getOptionProps,
-  //   groupedOptions,
-  //   focused,
-  // } = useAutocomplete({
-  //   id: "autocomplete",
-  //   options: internalOptions,
-  //   getOptionLabel,
-  //   value,
-  //   onChange: (_, newValue) => {
-  //     setHovered(false);
-  //     setValue(newValue);
-
-  //     if (newValue) {
-  //       const reorderedOptions = [
-  //         newValue,
-  //         ...internalOptions.filter((option) => option !== newValue),
-  //       ];
-  //       setInternalOptions(reorderedOptions);
-  //     } else {
-  //       setInternalOptions(options);
-  //     }
-  //   },
-  // });
-
-  // // Custom getListboxProps implementation
-  // const getListboxProps = () => {
-  //   return {
-  //     ...defaultGetListboxProps(),
-  //     ref: undefined,
-  //   };
-  // };
 
   const {
     getRootProps,
@@ -88,10 +43,10 @@ export const Autocomplete = <Option,>({
     getOptionProps,
     popupOpen,
     focused,
-    groupedOptions,
+    options,
   } = useAutocomplete({
     id: "autocomplete",
-    options,
+    options: originalOptions,
     value,
     onChange: (_, newValue) => setValue(newValue),
   });
@@ -108,7 +63,7 @@ export const Autocomplete = <Option,>({
         >
           <Label
             {...getInputLabelProps()}
-            moveToTop={value !== null || focused}
+            moveToTop={focused || value !== null}
           >
             {label}
           </Label>
@@ -118,11 +73,15 @@ export const Autocomplete = <Option,>({
             popupOpen={popupOpen}
             focused={focused}
           />
-          {popupOpen && groupedOptions.length > 0 && (
+          {popupOpen && options.length > 0 && (
             <Listbox {...getListboxProps()}>
-              {(groupedOptions as Option[]).map((option, index) => (
-                <Option {...getOptionProps({ option, index })} key={index}>
-                  {getOptionLabel(option)}
+              {(options as Option[]).map((option, index) => (
+                <Option
+                  {...getOptionProps({ option, index })}
+                  key={index}
+                  startAdornment={startAdornment}
+                >
+                  {option.label}
                 </Option>
               ))}
             </Listbox>
