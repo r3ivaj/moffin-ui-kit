@@ -61,7 +61,7 @@ export const OptionStartAdornment: Story = {
     ),
     startAdornment: ({ hovered }) => {
       return React.createElement(UserCircleIcon, {
-        className: `mr-2 size-4 ${hovered ? "text-[#1F2937]" : "text-[#6B7280]"}`,
+        className: `mr-2 ${hovered ? "text-[#1F2937]" : "text-[#6B7280]"}`,
       });
     },
     subtext: "Solo podrás elegir a Victor para continuar.",
