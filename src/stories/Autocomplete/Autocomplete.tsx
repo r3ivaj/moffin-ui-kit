@@ -53,7 +53,7 @@ export const Autocomplete = ({
 
   return (
     <React.Fragment>
-      <div>
+      <div className="flex flex-col gap-1">
         <Root
           {...getRootProps()}
           focused={focused}

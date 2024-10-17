@@ -1,5 +1,4 @@
 import React, { HTMLAttributes, ForwardedRef } from "react";
-// import { UserCircleIcon } from "../../shared/icons";
 import CheckIcon from "../../shared/icons/CheckIcon";
 
 import clsx from "clsx";
@@ -15,7 +14,6 @@ const Option = React.forwardRef(function Option(
 ) {
   const [hovered, setHovered] = React.useState<boolean>(false);
 
-  // const iconColor = hovered ? "text-[#1F2937]" : "text-[#6B7280]";
   const textFontWeight = hovered ? "font-semibold" : "font-normal";
 
   return (
@@ -29,7 +27,6 @@ const Option = React.forwardRef(function Option(
       {startAdornment &&
         typeof startAdornment === "function" &&
         startAdornment({ hovered })}
-      {/* <UserCircleIcon className={clsx("mr-2 size-4", iconColor)} /> */}
       <span
         className={clsx(
           "flex-1 text-sm leading-[1.375rem] text-[#1F2937]",

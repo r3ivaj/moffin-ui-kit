@@ -48,7 +48,7 @@ export const Primary: Story = {
   },
 };
 
-export const WithStartAdornment: Story = {
+export const OptionStartAdornment: Story = {
   args: {
     label: "Elige un usuario",
     options: [

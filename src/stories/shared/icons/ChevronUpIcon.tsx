@@ -1,10 +1,10 @@
 import React from "react";
 
-interface ChevronUpIconProps extends React.SVGProps<SVGSVGElement> {
+interface ChevronDownIconProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
 }
 
-const ChevronUpIcon: React.FC<ChevronUpIconProps> = ({
+const ChevronDownIcon: React.FC<ChevronDownIconProps> = ({
   className,
   ...props
 }) => {
@@ -19,7 +19,7 @@ const ChevronUpIcon: React.FC<ChevronUpIconProps> = ({
       {...props}
     >
       <path
-        d="M4.16665 12.5L9.99998 6.66667L15.8333 12.5"
+        d="M15.8333 7.50002L10 13.3333L4.16667 7.50002"
         stroke="currentColor"
         strokeWidth="1.66667"
         strokeLinecap="round"
@@ -29,4 +29,4 @@ const ChevronUpIcon: React.FC<ChevronUpIconProps> = ({
   );
 };
 
-export default ChevronUpIcon;
+export default ChevronDownIcon;
