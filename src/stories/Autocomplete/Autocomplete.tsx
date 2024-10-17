@@ -36,6 +36,8 @@ export const Autocomplete = <Option,>({
 }: AutocompleteProps<Option>) => {
   const [value, setValue] = React.useState<Option | null>(null);
   const [hovered, setHovered] = React.useState<boolean>(false);
+  const [internalOptions, setInternalOptions] =
+    React.useState<Option[]>(options);
 
   const {
     getRootProps,
@@ -49,22 +51,24 @@ export const Autocomplete = <Option,>({
     focused,
   } = useAutocomplete({
     id: "autocomplete",
-    options,
+    options: internalOptions,
     getOptionLabel,
     value,
     onChange: (_, newValue) => {
       setHovered(false);
       setValue(newValue);
+
+      if (newValue) {
+        const reorderedOptions = [
+          newValue,
+          ...internalOptions.filter((option) => option !== newValue),
+        ];
+        setInternalOptions(reorderedOptions);
+      } else {
+        setInternalOptions(options);
+      }
     },
   });
-
-  // Reorder options to put the selected value at the top
-  const orderedOptions = React.useMemo(() => {
-    if (value) {
-      return [value, ...groupedOptions.filter((option) => option !== value)];
-    }
-    return groupedOptions;
-  }, [groupedOptions, value]);
 
   // Custom getListboxProps implementation
   const getListboxProps = () => {
@@ -98,7 +102,7 @@ export const Autocomplete = <Option,>({
           />
           {groupedOptions.length > 0 && (
             <Listbox {...getListboxProps()}>
-              {(orderedOptions as Option[]).map((option, index) => (
+              {(groupedOptions as Option[]).map((option, index) => (
                 <Option {...getOptionProps({ option, index })} key={index}>
                   {getOptionLabel(option)}
                 </Option>
