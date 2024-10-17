@@ -29,8 +29,6 @@ const useAutocomplete = ({ id, options: originalOptions, value, onChange }) => {
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const [options, setOptions] = useState(originalOptions);
 
-  console.log({ focused, selectedOption, inputValue, options });
-
   const handleOpen = useCallback(
     (_, reason) => {
       if (open) return;
