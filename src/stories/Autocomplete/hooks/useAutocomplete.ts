@@ -73,7 +73,7 @@ interface UseAutocompleteReturn {
 
 const useAutocomplete = ({
   id,
-  options: originalOptions,
+  options: providedOptions,
   initialValue,
   onChange,
   onOptionClick,
@@ -88,7 +88,7 @@ const useAutocomplete = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const listboxRef = useRef<HTMLUListElement>(null);
   const [timeoutId, setTimeoutId] = useState<number | null>(null);
-  const [options, setOptions] = useState<Option[]>(originalOptions);
+  const [options, setOptions] = useState<Option[]>(providedOptions);
 
   const handleOpen = useCallback(
     (_: React.SyntheticEvent, reason: HandleOpenEventType) => {
@@ -109,12 +109,12 @@ const useAutocomplete = ({
   const reorderOptions = useCallback(
     (selectedOption: Option | null) => {
       const optionsOrdered = moveSelectedOptionToTop({
-        options: originalOptions,
+        options: providedOptions,
         selectedOption,
       });
       setOptions(optionsOrdered);
     },
-    [originalOptions],
+    [providedOptions],
   );
 
   const filterOptions = useCallback(
@@ -122,20 +122,20 @@ const useAutocomplete = ({
       setOptions(
         filterOptionsUtil({
           options: moveSelectedOptionToTop({
-            options: originalOptions,
+            options: providedOptions,
             selectedOption,
           }),
           searchText: inputText,
         }),
       );
     },
-    [originalOptions, selectedOption],
+    [providedOptions, selectedOption],
   );
 
   const resetIfNoOptionSelected = () => {
     if (selectedOption === null) {
       setInputValue("");
-      setOptions(originalOptions);
+      setOptions(providedOptions);
     }
   };
 
@@ -173,7 +173,7 @@ const useAutocomplete = ({
       if (!newValue) {
         onChange(event, null);
         setSelectedOption(null);
-        setOptions(originalOptions);
+        setOptions(providedOptions);
         return;
       }
 
