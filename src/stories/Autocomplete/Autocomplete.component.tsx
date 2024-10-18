@@ -29,7 +29,7 @@ export interface AutocompleteProps {
    * @example
    * <Autocomplete initialValue={{ label: 'México' }} />
    */
-  initialValue: Option | null;
+  initialValue?: Option | null;
 
   /**
    * List of options that users can select from in the autocomplete dropdown.
