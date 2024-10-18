@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, ForwardedRef } from "react";
-import { ChevronUpIcon } from "../../shared/icons";
+import { ChevronUpIcon } from "../../assets/icons";
 
 import clsx from "clsx";
 

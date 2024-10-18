@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, ForwardedRef } from "react";
-import CheckIcon from "../../shared/icons/CheckIcon";
+import CheckIcon from "../../assets/icons/CheckIcon";
 
 import clsx from "clsx";
 

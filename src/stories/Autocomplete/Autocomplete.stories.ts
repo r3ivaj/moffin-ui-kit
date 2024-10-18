@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 // import { fn } from '@storybook/test';
-import { UserCircleIcon } from "../shared/icons";
+import { UserCircleIcon } from "../assets/icons";
 
 import { Autocomplete } from "./Autocomplete";
 
