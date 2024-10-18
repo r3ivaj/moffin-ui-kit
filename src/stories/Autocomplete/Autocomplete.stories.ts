@@ -12,6 +12,11 @@ const meta = {
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
+    docs: {
+      story: {
+        height: "400px",
+      },
+    },
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
@@ -45,6 +50,7 @@ export const Primary: Story = {
     label: "Pick a movie",
     options: top10Films,
     subtext: "Subtext example",
+    className: "mt-1",
   },
 };
 
@@ -61,7 +67,7 @@ export const OptionStartAdornment: Story = {
     ),
     optionStartAdornment: ({ hovered }) => {
       return React.createElement(UserCircleIcon, {
-        className: `mr-2 ${hovered ? "text-[#1F2937]" : "text-[#6B7280]"}`,
+        className: `mr-2 ${hovered ? "text-slate-900" : "text-gray-600"}`,
       });
     },
     subtext: "Solo podrás elegir a Victor para continuar.",

@@ -39,6 +39,15 @@ export interface AutocompleteProps {
    * @returns A React node to be displayed at the start of each option.
    */
   optionStartAdornment?: (props: { hovered: boolean }) => React.ReactNode;
+
+  /**
+   * Optional custom CSS class name for the outermost container of the Autocomplete component.
+   * This can be used to apply custom styles or modify the layout of the component.
+   *
+   * @example
+   * <Autocomplete className="my-custom-class" />
+   */
+  className?: string;
 }
 
 export const Autocomplete = ({
@@ -46,6 +55,7 @@ export const Autocomplete = ({
   label,
   subtext,
   optionStartAdornment,
+  className,
 }: AutocompleteProps) => {
   const [value, setValue] = React.useState<Option | null>(null);
   const [hovered, setHovered] = React.useState<boolean>(false);
@@ -68,50 +78,45 @@ export const Autocomplete = ({
   });
 
   return (
-    <React.Fragment>
-      <div className="flex flex-col gap-1">
-        <Root
-          {...getRootProps()}
+    <div className={clsx("flex flex-col gap-1", className)}>
+      <Root
+        {...getRootProps()}
+        focused={focused}
+        hovered={hovered}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <Label {...getInputLabelProps()} moveToTop={focused || value !== null}>
+          {label}
+        </Label>
+        <Input {...getInputProps()} />
+        <PopupIndicator
+          {...getPopupIndicatorProps()}
+          popupOpen={popupOpen}
           focused={focused}
-          hovered={hovered}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-          <Label
-            {...getInputLabelProps()}
-            moveToTop={focused || value !== null}
-          >
-            {label}
-          </Label>
-          <Input {...getInputProps()} />
-          <PopupIndicator
-            {...getPopupIndicatorProps()}
-            popupOpen={popupOpen}
-            focused={focused}
-          />
-          {popupOpen && options.length > 0 && (
-            <Listbox {...getListboxProps()}>
-              {(options as Option[]).map((option, index) => (
-                <OptionComponent
-                  {...getOptionProps({ option, index })}
-                  key={index}
-                  startAdornment={optionStartAdornment}
-                >
-                  {option.label}
-                </OptionComponent>
-              ))}
-            </Listbox>
-          )}
-        </Root>
-        <span
-          className={clsx(
-            "text-xs text-[#6B7280]",
-            hovered && "drop-shadow-[0_4px_8px_rgba(64,67,68,0.24)]",
-          )}
-        >
-          {subtext}
-        </span>
-      </div>
-    </React.Fragment>
+        />
+        {popupOpen && options.length > 0 && (
+          <Listbox {...getListboxProps()}>
+            {(options as Option[]).map((option, index) => (
+              <OptionComponent
+                {...getOptionProps({ option, index })}
+                key={index}
+                startAdornment={optionStartAdornment}
+              >
+                {option.label}
+              </OptionComponent>
+            ))}
+          </Listbox>
+        )}
+      </Root>
+      <span
+        className={clsx(
+          "text-xs text-gray-600",
+          hovered && "drop-shadow-[0_4px_8px_rgba(64,67,68,0.24)]",
+        )}
+      >
+        {subtext}
+      </span>
+    </div>
   );
 };

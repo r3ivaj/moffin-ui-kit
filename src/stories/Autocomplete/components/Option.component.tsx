@@ -29,15 +29,13 @@ const Option = React.forwardRef(function Option(
         startAdornment({ hovered })}
       <span
         className={clsx(
-          "flex-1 text-sm leading-[1.375rem] text-[#1F2937]",
+          "flex-1 text-sm leading-[1.375rem] text-slate-900",
           textFontWeight,
         )}
       >
         {children}
       </span>
-      {props["aria-selected"] && (
-        <CheckIcon className="size-4 text-[#0E7490]" />
-      )}
+      {props["aria-selected"] && <CheckIcon className="size-4 text-teal-700" />}
     </li>
   );
 });

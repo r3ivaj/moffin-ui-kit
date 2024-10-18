@@ -101,9 +101,11 @@ const useAutocomplete = ({
 
   const reorderOptions = useCallback(
     (selectedOption: Option | null) => {
-      setOptions(
-        moveSelectedOptionToTop({ options: originalOptions, selectedOption }),
-      );
+      const optionsOrdered = moveSelectedOptionToTop({
+        options: originalOptions,
+        selectedOption,
+      });
+      setOptions(optionsOrdered);
     },
     [originalOptions],
   );

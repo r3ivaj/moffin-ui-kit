@@ -14,7 +14,7 @@ const Label = React.forwardRef(function Label(
     <label
       ref={ref}
       className={clsx(
-        "pointer-events-none absolute font-normal text-[#6B7280]",
+        "pointer-events-none absolute font-normal text-gray-600",
         moveToTop &&
           "left-[10px] top-0 z-[1] -translate-y-1/2 transform rounded-sm bg-white pl-[2px] pr-[2px] text-[12px] leading-4",
         !moveToTop &&

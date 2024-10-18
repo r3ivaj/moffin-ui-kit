@@ -26,3 +26,4 @@ dist-ssr
 # Storybook
 .cache
 storybook-static
+.vercel

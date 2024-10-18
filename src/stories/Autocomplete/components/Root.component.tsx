@@ -11,13 +11,15 @@ const Root = React.forwardRef<HTMLDivElement, RootProps>(function Root(
   { children, focused, hovered, className, ...props },
   ref,
 ) {
+  console.log({ hovered });
   return (
     <div
       ref={ref}
       className={clsx(
-        "relative flex min-w-[312px] items-center rounded-lg border bg-[white] pr-4",
+        "relative flex min-w-[312px] items-center rounded-lg border bg-white pr-4",
         hovered && "shadow-[0_4px_8px_rgba(64,67,68,0.24)]",
-        focused && "border border-[#164E63]",
+        !focused && "border-gray-300",
+        focused && "border-lightblue-700",
         className,
       )}
       {...props}

@@ -24,7 +24,7 @@ const PopupIndicator = React.forwardRef(function PopupIndicator(
     >
       <ChevronUpIcon
         className={clsx(
-          "transform text-[#6B7280]",
+          "transform text-gray-600",
           popupOpen && "rotate-180",
           focused && "text-black",
         )}
