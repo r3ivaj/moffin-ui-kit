@@ -3,7 +3,7 @@ import { useClickAway } from "react-use";
 import {
   filterOptions as filterOptionsUtil,
   moveSelectedOptionToTop,
-} from "../utils/utils";
+} from "../Autocomplete.utils";
 import { Option } from "../Autocomplete.types";
 
 const HANDLE_OPEN_EVENT_TYPES = {

@@ -1,4 +1,4 @@
-import { Option } from "../Autocomplete.types";
+import { Option } from "./Autocomplete.types";
 
 /**
  * Normalizes a string by removing diacritics and converting to lowercase.
