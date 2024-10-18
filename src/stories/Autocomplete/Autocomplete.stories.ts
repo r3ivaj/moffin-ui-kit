@@ -47,6 +47,7 @@ const top10Films = [
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {
   args: {
+    id: "primary-autocomplete",
     label: "Pick a movie",
     options: top10Films,
     subtext: "Subtext example",
@@ -56,6 +57,7 @@ export const Primary: Story = {
 
 export const OptionStartAdornment: Story = {
   args: {
+    id: "autocomplete-with-option-adornment",
     label: "Elige un usuario",
     options: [
       { label: "Victor Díaz" },

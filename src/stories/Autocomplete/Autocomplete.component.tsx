@@ -13,6 +13,14 @@ import { Option } from "./Autocomplete.types";
 
 export interface AutocompleteProps {
   /**
+   * Unique identifier for the input element.
+   *
+   * @example
+   * <Autocomplete id="country-selector" />
+   */
+  id: string;
+
+  /**
    * List of options that users can select from in the autocomplete dropdown.
    * Each option must contain a unique `label` to display to the user.
    */
@@ -51,6 +59,7 @@ export interface AutocompleteProps {
 }
 
 export const Autocomplete = ({
+  id,
   options: originalOptions,
   label,
   subtext,
@@ -71,7 +80,7 @@ export const Autocomplete = ({
     focused,
     options,
   } = useAutocomplete({
-    id: "autocomplete",
+    id,
     options: originalOptions,
     value,
     onChange: (_, newValue) => setValue(newValue),
