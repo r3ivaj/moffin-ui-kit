@@ -27,7 +27,7 @@ type HandleCloseEventType =
 interface UseAutocompleteProps {
   id: string;
   options: Option[];
-  value: Option | null;
+  initialValue: Option | null;
   onChange: (
     event: ChangeEvent<HTMLInputElement> | MouseEvent<HTMLLIElement>,
     value: Option | null,
@@ -74,12 +74,14 @@ interface UseAutocompleteReturn {
 const useAutocomplete = ({
   id,
   options: originalOptions,
-  value,
+  initialValue,
   onChange,
   onOptionClick,
 }: UseAutocompleteProps): UseAutocompleteReturn => {
   const [open, setOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<Option | null>(value);
+  const [selectedOption, setSelectedOption] = useState<Option | null>(
+    initialValue,
+  );
   const [focused, setFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const rootRef = useRef<HTMLDivElement>(null);
@@ -130,6 +132,12 @@ const useAutocomplete = ({
     [originalOptions, selectedOption],
   );
 
+  const resetIfNoOptionSelected = () => {
+    if (selectedOption === null) {
+      setInputValue("");
+    }
+  };
+
   useClickAway(rootRef, (event: Event) => {
     setFocused(false);
     handleClose(event, HANDLE_CLOSE_EVENT_TYPES.CLICK_OUTSIDE);
@@ -176,6 +184,7 @@ const useAutocomplete = ({
     onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
       setFocused(false);
       handleClose(event, HANDLE_CLOSE_EVENT_TYPES.INPUT_BLUR);
+      resetIfNoOptionSelected();
     },
   });
 

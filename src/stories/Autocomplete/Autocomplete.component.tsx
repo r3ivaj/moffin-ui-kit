@@ -21,6 +21,17 @@ export interface AutocompleteProps {
   id: string;
 
   /**
+   * The initial selected value in the autocomplete input.
+   * If set to `null`, no option will be selected by default.
+   * This can be useful to pre-populate the input with a predefined option
+   * when the component is first rendered.
+   *
+   * @example
+   * <Autocomplete initialValue={{ label: 'México' }} />
+   */
+  initialValue: Option | null;
+
+  /**
    * List of options that users can select from in the autocomplete dropdown.
    * Each option must contain a unique `label` to display to the user.
    */
@@ -63,6 +74,7 @@ export const Autocomplete = ({
   options: originalOptions,
   label,
   subtext,
+  initialValue = null,
   optionStartAdornment,
   className,
 }: AutocompleteProps) => {
@@ -82,7 +94,7 @@ export const Autocomplete = ({
   } = useAutocomplete({
     id,
     options: originalOptions,
-    value,
+    initialValue: initialValue,
     onChange: (_, newValue) => setValue(newValue),
     onOptionClick: () => setHovered(false),
   });
