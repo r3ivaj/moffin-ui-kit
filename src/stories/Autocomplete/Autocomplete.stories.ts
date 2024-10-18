@@ -48,16 +48,17 @@ const top10Films = [
 export const Primary: Story = {
   args: {
     id: "primary-autocomplete",
+    className: "mt-1",
     label: "Pick a movie",
     options: top10Films,
     subtext: "Subtext example",
-    className: "mt-1",
   },
 };
 
 export const OptionStartAdornment: Story = {
   args: {
     id: "autocomplete-with-option-adornment",
+    className: "mt-1",
     label: "Elige un usuario",
     options: [
       { label: "Victor Díaz" },
