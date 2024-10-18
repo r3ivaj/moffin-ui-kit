@@ -82,8 +82,8 @@ const useAutocomplete = ({
   const [selectedOption, setSelectedOption] = useState<Option | null>(
     initialValue,
   );
-  const [focused, setFocused] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [focused, setFocused] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>("");
   const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listboxRef = useRef<HTMLUListElement>(null);
@@ -135,6 +135,7 @@ const useAutocomplete = ({
   const resetIfNoOptionSelected = () => {
     if (selectedOption === null) {
       setInputValue("");
+      setOptions(originalOptions);
     }
   };
 
