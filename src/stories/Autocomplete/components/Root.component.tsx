@@ -11,7 +11,6 @@ const Root = React.forwardRef<HTMLDivElement, RootProps>(function Root(
   { children, focused, hovered, className, ...props },
   ref,
 ) {
-  console.log({ hovered });
   return (
     <div
       ref={ref}

@@ -75,6 +75,7 @@ export const Autocomplete = ({
     options: originalOptions,
     value,
     onChange: (_, newValue) => setValue(newValue),
+    onOptionClick: () => setHovered(false),
   });
 
   return (

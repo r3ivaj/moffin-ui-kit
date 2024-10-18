@@ -32,6 +32,10 @@ interface UseAutocompleteProps {
     event: ChangeEvent<HTMLInputElement> | MouseEvent<HTMLLIElement>,
     value: Option | null,
   ) => void;
+  onOptionClick: (
+    event: MouseEvent<HTMLLIElement>,
+    value: Option | null,
+  ) => void;
 }
 
 interface UseAutocompleteReturn {
@@ -72,6 +76,7 @@ const useAutocomplete = ({
   options: originalOptions,
   value,
   onChange,
+  onOptionClick,
 }: UseAutocompleteProps): UseAutocompleteReturn => {
   const [open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(value);
@@ -193,6 +198,7 @@ const useAutocomplete = ({
   const getOptionProps = ({ option }: { option: Option }) => ({
     onClick: (event: React.MouseEvent<HTMLLIElement>) => {
       onChange(event, option);
+      onOptionClick(event, option);
       setInputValue(option.label);
       setSelectedOption(option);
 
