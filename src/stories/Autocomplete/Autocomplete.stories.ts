@@ -59,7 +59,7 @@ export const OptionStartAdornment: Story = {
     ].sort((a, b) =>
       a.label.localeCompare(b.label, undefined, { numeric: true }),
     ),
-    startAdornment: ({ hovered }) => {
+    optionStartAdornment: ({ hovered }) => {
       return React.createElement(UserCircleIcon, {
         className: `mr-2 ${hovered ? "text-[#1F2937]" : "text-[#6B7280]"}`,
       });

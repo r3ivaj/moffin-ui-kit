@@ -12,21 +12,40 @@ import useAutocomplete from "./hooks/useAutocomplete";
 import { Option } from "./Autocomplete.types";
 
 export interface AutocompleteProps {
-  /** Array of options */
+  /**
+   * List of options that users can select from in the autocomplete dropdown.
+   * Each option must contain a unique `label` to display to the user.
+   */
   options: Option[];
-  /** Label for the autocomplete */
+
+  /**
+   * Text label displayed above or inside the input field.
+   * It helps users understand the purpose of the input.
+   */
   label: string;
-  /** Subtext */
+
+  /**
+   * Optional text displayed below the input field.
+   * It can provide additional guidance or information.
+   */
   subtext?: string;
-  /** Start Adornment */
-  startAdornment?: (props: { hovered: boolean }) => React.ReactNode;
+
+  /**
+   * Optional custom element displayed at the start of each option in the dropdown list.
+   * This can be used to add icons or other elements to enhance the visual presentation.
+   * It receives a `hovered` prop, indicating if the option is currently being hovered.
+   *
+   * @param props.hovered - A boolean indicating whether the option is being hovered.
+   * @returns A React node to be displayed at the start of each option.
+   */
+  optionStartAdornment?: (props: { hovered: boolean }) => React.ReactNode;
 }
 
 export const Autocomplete = ({
   options: originalOptions,
   label,
   subtext,
-  startAdornment,
+  optionStartAdornment,
 }: AutocompleteProps) => {
   const [value, setValue] = React.useState<Option | null>(null);
   const [hovered, setHovered] = React.useState<boolean>(false);
@@ -76,7 +95,7 @@ export const Autocomplete = ({
                 <OptionComponent
                   {...getOptionProps({ option, index })}
                   key={index}
-                  startAdornment={startAdornment}
+                  startAdornment={optionStartAdornment}
                 >
                   {option.label}
                 </OptionComponent>
