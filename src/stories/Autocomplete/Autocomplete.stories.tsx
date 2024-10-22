@@ -69,9 +69,11 @@ export const OptionStartAdornment: Story = {
       a.label.localeCompare(b.label, undefined, { numeric: true }),
     ),
     optionStartAdornment: ({ hovered }) => {
-      return React.createElement(UserCircleIcon, {
-        className: `mr-2 ${hovered ? "text-slate-900" : "text-gray-600"}`,
-      });
+      return (
+        <UserCircleIcon
+          className={`mr-2 ${hovered ? "text-slate-900" : "text-gray-600"}`}
+        />
+      );
     },
     subtext: "Solo podrás elegir a Victor para continuar.",
   },
